@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const authRoute = require("./routes/auth");
+const authRoute = require('./auth/routes/authRouter');
 
-mongoose.connect("mongodb+srv://user:Bibliobox1@cbb.khzxbmf.mongodb.net/test",
+mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
     { useNewUrlParser: true,
     useUnifiedTopology: true })
     .then(() => console.log("connection à MongoDB réussie ! "))
@@ -19,6 +19,6 @@ app.use((req, res, next) => {
     next();
     });
 
-app.use('auth', authRoute);
+app.use('/obtorta/auth', authRoute);
 
 module.exports = app;
