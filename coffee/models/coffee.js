@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
-const _package = require('./package');
-const plant = require('./plant');
 
 const Coffee = mongoose.Schema({
     name: {type:String, required:true},
     brand: {type:String, required:true},
-    power: {type:number, required:true},
-    package: {type:_package, required:true},
-    plant: {type:plant, required:true},
+    power: {type:Number, required:true},
+    package: {type:String, required:true},
+    plant: {type:String, required:true},
 });
 
 

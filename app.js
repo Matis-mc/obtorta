@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const authRoute = require('./auth/routes/authRouter');
+const coffeeRoute = require('./coffee/routes/coffeeRouter')
 
 mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
     { useNewUrlParser: true,
@@ -20,5 +21,5 @@ app.use((req, res, next) => {
     });
 
 app.use('/obtorta/auth', authRoute);
-
+app.use('/obtorta/coffee', coffeeRoute)
 module.exports = app;
