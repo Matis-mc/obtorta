@@ -15,21 +15,21 @@ exports.packages = [
     {
         id:1,
         name:"Grain",
-        asset:"grain"
+        asset:"package-grain"
     },
     {
         id:2,
         name:"Moulu",
-        asset:"powder"
+        asset:"package-ground"
     },
     {
         id:3,
         name:"Achat",
-        asset:"bought"
+        asset:"coffee-bought"
     },
     {
         id:4,
         name:"Capsule",
-        asset:"caps"
+        asset:"package-capsule"
     }
 ]

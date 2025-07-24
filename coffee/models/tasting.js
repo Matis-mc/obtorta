@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const coffee = require('./coffee');
-const pot = require('./pot');
 
 const Tasting = mongoose.Schema({
     idUser: {type:String, required:true},
@@ -14,4 +12,4 @@ const Tasting = mongoose.Schema({
     view: {type:Number, required:true}
 })
 
-module.exports = mongoose.model('Tasting', Tasting); 
+module.exports = mongoose.model('Tasting', Tasting);
