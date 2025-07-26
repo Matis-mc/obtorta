@@ -41,8 +41,8 @@ exports.getTastings = async (req, res, next) => {
             tastings.map(async t => {
                 let coffee = await Coffee.findOne({idCoffe:t.idCoffe});
                 let pot = await Pot.findOne({idPot:t.pot});
-                let plant = constantes.plants.filter(p => coffee.plant == p.id);
-                let package = constantes.packages.filter(p => coffee.package == p.id);
+                let plant = constantes.plants.filter(p => coffee.plant == p.id)[0];
+                let package = constantes.packages.filter(p => coffee.package == p.id)[0];
                 console.log(JSON.stringify(package))
                 return new TastingDto(t, new CoffeeDto(coffee, plant, package), pot);
         }));

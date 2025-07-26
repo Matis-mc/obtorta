@@ -15,22 +15,23 @@ exports.login = (req, res, next) => {
     .then( user => {
         if(!user){
             console.log("Username incorrect");
-            res.status(401).json({message:"L'utilisateur n'est pas trouvé"})
-        }
-        console.log("Utilisateur trouvé " + user);
-        if(req.body.password = user.password){
-            console.log("Acces autorisé");
-            res.status(200).json({
-                userID: user._id,
-                username: user.username,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                token: jwt.sign({userId: user._id}, "My_secret_string",{expiresIn:'72h'})
-            })
+            res.status(401).json({message:"L'utilisateur n'est pas trouvé"});
+        }else {
+            console.log("Utilisateur trouvé " + user);
+            if(req.body.password = user.password){
+                console.log("Acces autorisé");
+                res.status(200).json({
+                    userID: user._id,
+                    username: user.username,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    token: jwt.sign({userId: user._id}, "My_secret_string",{expiresIn:'72h'})
+                })
 
-        } else {
-            console.log("Username ou mot de passe incorrect");
-            res.status(403).json({message:"Accès refusé"}) 
+            } else {
+                console.log("Username ou mot de passe incorrect");
+                res.status(403).json({message:"Accès refusé"}) 
+            }
         }
     })
 };
