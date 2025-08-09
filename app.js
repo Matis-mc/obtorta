@@ -9,8 +9,7 @@ mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
     { useNewUrlParser: true,
     useUnifiedTopology: true })
     .then(() => console.log("connection à MongoDB réussie ! "))
-    .catch(() => console.error("connection à MongoDB échouée ..."))
-
+    .catch((e) => console.error("connection à MongoDB échouée ..." + JSON.stringify(e)))
 app.use(express.json());
 
 app.use((req, res, next) => {
