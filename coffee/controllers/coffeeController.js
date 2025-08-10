@@ -17,7 +17,7 @@ exports.createTasting = async (req, res, next) => {
         }).save();
         console.log(JSON.stringify(coffee));
         const tasting = await new Tasting({
-                        idUser:req.body.idUser,
+                        idUser:req.params._idUser,
                         idCoffee:coffee._id,
                         idPot:req.body.idPot,
                         globalRate:req.body.globalRate,
