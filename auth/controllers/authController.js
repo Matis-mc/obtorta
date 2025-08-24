@@ -3,11 +3,13 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
 
-    console.log("Signup : " + req.body)
     const user = new User({username: req.body.username, password: req.body.password});
     user.save()
-    .then(res.status(201).send(user))
-    .catch(res.status(400).json({message: "Impossible d'enregistrer l'utilisateur"}))
+    .then(u => res.status(201).send(user))
+    .catch(e => {
+        console.log(e);
+        res.status(400).json({message: "Impossible d'enregistrer l'utilisateur"})
+    })
 };
 
 exports.login = (req, res, next) => {
