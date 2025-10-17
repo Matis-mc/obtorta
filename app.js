@@ -22,9 +22,14 @@ app.use((req, res, next) => {
     next();
     });
 
+
+const allowedOrigins = [
+  'https://coffee-app-two-lyart.vercel.app',
+  'https://la-harde.vercel.app/'
+];
+
 const corsOptions = {
-    origin: 'http://localhost:5173',
-    //origin: 'https://coffee-app-two-lyart.vercel.app',
+    origin: allowedOrigins,
     optionsSuccessStatus: 200,
  };
 
