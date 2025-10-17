@@ -24,8 +24,9 @@ app.use((req, res, next) => {
 
 
 const allowedOrigins = [
-  'https://coffee-app-two-lyart.vercel.app',
-  'https://la-harde.vercel.app'
+  'https://coffee-enctype="multipart/form-data"app-two-lyart.vercel.app',
+  'https://la-harde.vercel.app',
+  'file:///home/matis/dev/gpx_exporter.html'
 ];
 
 const corsOptions = {

@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const herdCtrl = require("../controller/herdController");
+const multer  = require('multer')
+const upload = multer()
 
+router.post('/gpx', upload.single("file"), herdCtrl.uploadGPX);
 router.get('/wakeup', herdCtrl.wakeUp)
 router.post('/participants', herdCtrl.addParticipant);
 router.get('/participants', herdCtrl.getParticipant);
