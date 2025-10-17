@@ -1,6 +1,9 @@
 const HerdEvent = require("../model/HerdEvent");
 const Participant = require("../model/Participant");
 
+exports.wakeUp = async(req,res,next) => {
+    res.status(200).send("Show must go on !")
+}
 
 exports.createEvent = async(req, res, next) => {
     try{
