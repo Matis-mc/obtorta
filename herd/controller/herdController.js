@@ -95,3 +95,18 @@ exports.uploadGPX = async(req, res ,next) => {
     }
 }
 
+exports.downloadGPX = async(req, res, next) => {
+
+    try {
+        const file = await GpxFile.find({idEvent:req.query.event});
+        if(file == null){
+            res.status(204).send();
+        }
+        res.status(200).send(file)
+    } catch(error){
+        console.error("Erreur lors de la recuperation du fichier : " + error)
+        res.status(500).send({message: "Erreur lors de la recuperation du fichier."});
+    }
+
+}
+
