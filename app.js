@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 const allowedOrigins = [
   'https://coffee-app-two-lyart.vercel.app',
-  'https://la-harde.vercel.app/'
+  'https://la-harde.vercel.app'
 ];
 
 const corsOptions = {
