@@ -2,6 +2,8 @@ const { Mongoose } = require("mongoose");
 const HerdEvent = require("../model/HerdEvent");
 const Participant = require("../model/Participant");
 const GpxFile = require("../model/GpxFile");
+const EventDto = require("../model/EventDto");
+const e = require("cors");
 
 exports.wakeUp = async(req,res,next) => {
     res.status(200).send("Show must go on !")
@@ -30,7 +32,15 @@ exports.getEvents = async(req,res,next) => {
         if(events == null){
             res.status(204).send();
         }
-        res.status(200).send(events);
+        let eventDtos = [];
+        for (let e of events){
+            console.log(e);
+            let gpx = await GpxFile.find({idEvent: e._id});
+            let participants = await Participant.find({idEvent:e._id});
+            let eventDto = new EventDto(e._id, e.name, e.date, e.localisation, e.distance, e.type, participants, gpx);
+            eventDtos.push(eventDto);
+        }
+        res.status(200).send(eventDtos);
     } catch(error){
         console.error("Erreur lors de la recuperation des évènements : " + error)
         res.status(500).send({message: "Erreur lors de la recuperation des évènements."});

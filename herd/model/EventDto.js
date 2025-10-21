@@ -1,12 +1,14 @@
 class EventDto{
 
-    constructor(name, date, localisation, distance, type){
+    constructor(id, name, date, localisation, distance, type, participants, gpx){
+        this._id = id;
         this.name = name;
         this.date = date
         this.localisation = localisation;
         this.distance = distance;
         this.type = type;
-        this.participants = participantes;
+        this.participants = participants;
+        this.gpx = gpx;
     }
 
 }

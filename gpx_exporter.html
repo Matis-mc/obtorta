@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload GPX</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Upload GPX
+        </h1>
+
+        <div class="space-y-4">
+          <!-- Zone de sélection de fichier -->
+          <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+            <label for="file-upload" class="cursor-pointer">
+              <svg class="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              <span class="block text-sm text-gray-600 mb-2">
+                Cliquez pour sélectionner un fichier GPX
+              </span>
+              <input
+                id="file-upload"
+                type="file"
+                nme="gpx_file"
+                accept=".gpx"
+                @change="handleFileChange"
+                class="hidden"
+              />
+            </label>
+          </div>
+
+          <!-- Fichier sélectionné -->
+          <div v-if="file" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span class="text-sm text-gray-700 truncate flex-1">
+              {{ file.name }}
+            </span>
+            <span class="text-xs text-gray-500">
+              {{ (file.size / 1024).toFixed(1) }} KB
+            </span>
+          </div>
+
+          <!-- Bouton d'envoi -->
+          <button
+            @click="handleUpload"
+            :disabled="!file || status === 'uploading'"
+            :class="[
+              'w-full py-3 px-4 rounded-lg font-medium transition-colors',
+              !file || status === 'uploading'
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-blue-500 text-white hover:bg-blue-600'
+            ]"
+          >
+            {{ status === 'uploading' ? 'Envoi en cours...' : 'Envoyer' }}
+          </button>
+
+          <!-- Message de statut -->
+          <div
+            v-if="message"
+            :class="[
+              'flex items-center gap-2 p-3 rounded-lg',
+              status === 'success'
+                ? 'bg-green-50 text-green-800'
+                : 'bg-red-50 text-red-800'
+            ]"
+          >
+            <svg v-if="status === 'success'" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <svg v-else class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-sm">{{ message }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          file: null,
+          status: 'idle', // idle, uploading, success, error
+          message: ''
+        };
+      },
+      methods: {
+        handleFileChange(event) {
+          const selectedFile = event.target.files[0];
+          if (selectedFile && selectedFile.name.endsWith('.gpx')) {
+            this.file = selectedFile;
+            this.status = 'idle';
+            this.message = '';
+          } else {
+            this.file = null;
+            this.status = 'error';
+            this.message = 'Veuillez sélectionner un fichier GPX valide';
+          }
+        },
+        async handleUpload() {
+          if (!this.file) return;
+
+          this.status = 'uploading';
+          this.message = '';
+
+          const formData = new FormData();
+          formData.append('file', this.file);
+
+          try {
+            // Remplacez cette URL par l'URL de votre backend
+            const response = await fetch('http://localhost:3000/obtorta/herd/gpx?event=68f7ef81bb71b076be63d69d', {
+              method: 'POST',
+              body: formData,
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              this.status = 'success';
+              this.message = 'Fichier envoyé avec succès !';
+            } else {
+              throw new Error('Erreur lors de l\'envoi');
+            }
+          } catch (error) {
+            this.status = 'error';
+            this.message = 'Erreur : ' + error.message;
+          }
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

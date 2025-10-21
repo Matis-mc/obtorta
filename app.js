@@ -7,7 +7,9 @@ const coffeeRoute = require('./coffee/routes/coffeeRouter')
 const herdRouter = require('./herd/routes/herdRouter');
 
 mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
-    { useNewUrlParser: true,
+    {
+    dbName: "herd", 
+    useNewUrlParser: true,
     useUnifiedTopology: true })
     .then(() => console.log("connection à MongoDB réussie ! "))
     .catch((e) => console.error("connection à MongoDB échouée ..." + JSON.stringify(e)))

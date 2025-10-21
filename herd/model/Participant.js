@@ -5,4 +5,4 @@ const Participant = mongoose.Schema({
     participant:{type:String, required:true}
 })
 
-module.exports = mongoose.model('Participan', Participant); 
+module.exports = mongoose.model('Participant', Participant); 
