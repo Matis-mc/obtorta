@@ -9,7 +9,7 @@ router.post('/participants', herdCtrl.addParticipant);
 router.get('/participants', herdCtrl.getParticipant);
 router.delete('/participants', herdCtrl.deleteParticipant);
 router.get('/events', herdCtrl.getEvents);
-router.post('/events', herdCtrl.createEvent);
+router.post('/events', upload.single("file"), herdCtrl.createEvent);
 router.get('/gpx', herdCtrl.downloadGPX);
 router.post('/gpx', upload.single("file"), herdCtrl.uploadGPX);
 
