@@ -1,9 +1,5 @@
-const { Mongoose } = require("mongoose");
-const HerdEvent = require("../model/HerdEvent");
 const Participant = require("../model/Participant");
-const GpxFile = require("../model/GpxFile");
-const EventDto = require("../model/EventDto");
-const e = require("cors");
+const HerdService = require("../service/herdService");
 
 exports.wakeUp = async(req,res,next) => {
     res.status(200).send("Show must go on !")
@@ -11,13 +7,21 @@ exports.wakeUp = async(req,res,next) => {
 
 exports.createEvent = async(req, res, next) => {
     try{
-        const event = await new HerdEvent({
-            name:req.body.name,
-            date:req.body.date,
-            localisation:req.body.localisation,
-            distance:req.body.distance,
-            type:req.body.type
-        }).save();
+        const event = HerdService.saveHerdEvent(
+            req.body.name,
+            req.body.date,
+            req.body.localisation,
+            req.body.distance,
+            req.body.type);
+
+        if(req.body.participants != undefined){
+            for (let p of participants){
+                HerdService.saveParticipant(event._id, p.participant);
+            }
+        }
+        if(req.body.file != undefined){
+            HerdService.saveGPX(req.file.originalname, req.file.buffer, req.file.size, event);
+        }
         res.status(201).send(event);
     } catch(error){
         console.error("Erreur lors de l'enregistrement de l'évenement : " + error)
@@ -28,17 +32,9 @@ exports.createEvent = async(req, res, next) => {
 exports.getEvents = async(req,res,next) => {
 
     try {
-        let events = await HerdEvent.find();
-        if(events == null){
-            res.status(204).send();
-        }
-        let eventDtos = [];
-        for (let e of events){
-            console.log(e);
-            let gpx = await GpxFile.find({idEvent: e._id});
-            let participants = await Participant.find({idEvent:e._id});
-            let eventDto = new EventDto(e._id, e.name, e.date, e.localisation, e.distance, e.type, participants, gpx);
-            eventDtos.push(eventDto);
+        let eventDtos = await HerdService.getEventsDtos();
+        if(eventDtos == null || eventDtos == undefined){
+            return res.status(204).send();
         }
         res.status(200).send(eventDtos);
     } catch(error){
@@ -50,11 +46,7 @@ exports.getEvents = async(req,res,next) => {
 exports.addParticipant = async(req, res, next) => {
 
     try {
-        const participant = await new Participant({
-            idEvent: req.body.idEvent,
-            participant: req.body.participant
-        })
-        .save();
+        const participant = HerdService.saveParticipant(req.body.idEvent, req.body.participant);
         res.status(201).send(participant);
     } catch(error){
         console.error("Erreur lors de l'enregistrement de la participation à un évenement : " + error)
@@ -66,7 +58,7 @@ exports.getParticipant = async(req, res, next) => {
 
     try {
         console.log(req);
-        let participant = await Participant.find({idEvent:req.query.event});
+        let participant = HerdService.getParticipantFromEvent(req.query.event);
         res.status(200).send(participant);
     } catch(error){
         console.error("Erreur lors de la recuperation des participants : " + error)
@@ -78,10 +70,7 @@ exports.getParticipant = async(req, res, next) => {
 exports.deleteParticipant = async(req, res, next) => {
 
     try {
-        let participant = await Participant.deleteOne({
-            _id: req.params.participant,
-            idEvent: req.params.event
-        });
+        let participant = HerdService.deleteParticipantFromEvent(req.params.participant, req.params.event);
         res.status(200).send(participant);
     } catch(error){
         console.error("Erreur lors de la suppression du participant : " + error)
@@ -92,12 +81,7 @@ exports.deleteParticipant = async(req, res, next) => {
 
 exports.uploadGPX = async(req, res ,next) => {
     try {
-        const fileLoaded = await new GpxFile({
-            name: req.file.originalname,
-            file: req.file.buffer,
-            size: req.file.size,
-            idEvent: req.query.event
-        }).save();
+        const fileLoaded = HerdService.saveGPX(req.file.originalname, req.file.buffer, req.file.size, req.query.event);
         res.status(201).send(fileLoaded._id);
     } catch(error){
         console.error("Erreur lors de l'enregistrement du gpx : " + error)
@@ -108,7 +92,7 @@ exports.uploadGPX = async(req, res ,next) => {
 exports.downloadGPX = async(req, res, next) => {
 
     try {
-        const file = await GpxFile.find({idEvent:req.query.event});
+        const file = HerdService.getGpxFileFromEvent(req.query.event);
         if(file == null){
             res.status(204).send();
         }
