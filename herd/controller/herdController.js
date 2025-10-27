@@ -57,7 +57,6 @@ exports.addParticipant = async(req, res, next) => {
 exports.getParticipant = async(req, res, next) => {
 
     try {
-        console.log(req);
         let participant = HerdService.getParticipantFromEvent(req.query.event);
         res.status(200).send(participant);
     } catch(error){
