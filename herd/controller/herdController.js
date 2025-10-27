@@ -20,7 +20,7 @@ exports.createEvent = async(req, res, next) => {
                 HerdService.saveParticipant(event._id, p.participant);
             }
         }
-        if(req.body.file != undefined){
+        if(req.file != undefined){
             HerdService.saveGPX(req.file.originalname, req.file.buffer, req.file.size, event);
         }
         res.status(201).send(event);
