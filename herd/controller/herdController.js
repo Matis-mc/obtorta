@@ -7,7 +7,7 @@ exports.wakeUp = async(req,res,next) => {
 
 exports.createEvent = async(req, res, next) => {
     try{
-        console.log(req.body);
+        console.log(req.file);
         const event = HerdService.saveHerdEvent(
             req.body.name,
             req.body.date,
