@@ -29,7 +29,7 @@ exports.createEvent = async(req, res, next) => {
     }
 }
 
-exports.getEvents = async(req,res,next) => {
+exports.getEvents = async(req, res, next) => {
 
     try {
         let eventDtos = await HerdService.getEventsDtos();

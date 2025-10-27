@@ -7,11 +7,11 @@ const EventDto = require("../model/EventDto");
 exports.saveHerdEvent = async (name, date, localisation, distance, type) => {
     
     return await new HerdEvent({
-            name:req.body.name,
-            date:req.body.date,
-            localisation:req.body.localisation,
-            distance:req.body.distance,
-            type:req.body.type
+            name:name,
+            date:date,
+            localisation:localisation,
+            distance:distance,
+            type:type
         }).save();
     }
 
@@ -60,7 +60,7 @@ exports.getEventDto = async (event) => {
 }
 
 exports.getEventsDtos = async () => {
-    let events = this.getEvents();
+    let events = await this.getEvents();
     if(events == null){
         return null;
     }
