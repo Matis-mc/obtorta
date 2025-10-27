@@ -1,3 +1,9 @@
+const Participant = require("../model/Participant");
+const HerdEvent = require("../model/HerdEvent");
+const GpxFile = require("../model/GpxFile");
+const EventDto = require("../model/EventDto");
+
+
 exports.saveHerdEvent = async (name, date, localisation, distance, type) => {
     
     return await new HerdEvent({
