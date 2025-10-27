@@ -53,8 +53,8 @@ exports.getEvents = async () => {
 }
 
 exports.getEventDto = async (event) => {
-    let gpx = this.getGpxFileFromEvent(event._id);
-    let participants = this.getParticipantFromEvent(event._id);
+    let gpx = await this.getGpxFileFromEvent(event._id);
+    let participants = await this.getParticipantFromEvent(event._id);
     let eventDto = new EventDto(event._id, event.name, event.date, event.localisation, event.distance, event.type, participants, gpx);
     return eventDto;     
 }
