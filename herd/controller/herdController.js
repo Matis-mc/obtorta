@@ -1,4 +1,3 @@
-const Participant = require("../model/Participant");
 const HerdService = require("../service/herdService");
 
 exports.wakeUp = async(req,res,next) => {
@@ -101,6 +100,5 @@ exports.downloadGPX = async(req, res, next) => {
         console.error("Erreur lors de la recuperation du fichier : " + error)
         res.status(500).send({message: "Erreur lors de la recuperation du fichier."});
     }
-
 }
 
