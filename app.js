@@ -9,14 +9,14 @@ const commonsRouter = require('./commons/controllers/notificationController')
 
 
 //--------------------------------- Connection Mongo DB ---------------------------------\\
-mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
+/*mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
 {
     dbName: "herd", 
     useNewUrlParser: true,
     useUnifiedTopology: true })
     .then(() => console.log("connection à MongoDB réussie ! "))
     .catch((e) => console.error("connection à MongoDB échouée ..." + JSON.stringify(e)))
-
+*/
 //--------------------------------- Configuration Express ---------------------------------\\
 app.use(express.json());
 
