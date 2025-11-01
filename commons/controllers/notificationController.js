@@ -4,7 +4,7 @@ const router = express.Router();
 const webpush = require('../../config/push');
 const Subscription = require('../models/SubscriptionSchema');
 
-const subscriptions = [{
+const subscriptionsHardCored = [{
         "endpoint": "https://wns2-par02p.notify.windows.com/w/?token=BQYAAAC8CuXt%2bMvAaoJr81%2fEnSxjIjOYDOyXonVMLNC%2bJVPfyEpU3HC4zSfbkA4SsuKERl9zcpcnPwQBVtPuTdUBE5C1X3Zy186o2Yz%2fqnJOYvkAo1f0Jaj16hUdrhPh0O8A6GVL6SPDE%2b0PjLMKwyQMBP7j9tCqvjxFxpeBJX2M8Qir1MFb2iQj69kfL8qsTGor3%2bhLIWCeZs8zPECnnfzmr2n6pu8xGakXVgv5oNNUSk3h4i2N80y8O8OA5ZHZi05A5XXYc2svJcVpzGbIh4h0gGqAMe79ytroM5D4KuOhh0M%2b%2b6GBxcGdsp%2bPLfxohfhOljIdku0YLvJCeRIuMHpRnZ29",
         "expirationTime": null,
         "keys": {
@@ -15,13 +15,12 @@ const subscriptions = [{
 ]
 
 // Sauvegarder une nouvelle subscription
-router.post('notifications/subscribe', async (req, res) => {
+router.post('/notifications/subscribe', async (req, res) => {
   try {
-    const { subscription, userId } = req.body;
+    const { subscription} = req.body;
     
     // Sauvegarder en DB
     const newSubscription = new Subscription({
-      userId,
       endpoint: subscription.endpoint,
       keys: subscription.keys
     });
@@ -42,7 +41,7 @@ router.post('notifications/subscribe', async (req, res) => {
 });
 
 // Supprimer une subscription
-router.post('notifications/unsubscribe', async (req, res) => {
+router.post('/notifications/unsubscribe', async (req, res) => {
   try {
     const { endpoint } = req.body;
     await Subscription.deleteOne({ endpoint });
@@ -65,7 +64,7 @@ router.post('/notifications/send', async (req, res) => {
     const {body, data } = req.body;
     
     // Récupérer toutes les subscriptions de l'utilisateur
-    //const subscriptions = await Subscription.find({ userId });
+    const subscriptions = await Subscription.find();
     
     if (subscriptions.length === 0) {
       return res.status(404).json({ 
