@@ -5,8 +5,6 @@ const app = express();
 const authRoute = require('./auth/routes/authRouter');
 const coffeeRoute = require('./coffee/routes/coffeeRouter')
 const herdRouter = require('./herd/routes/herdRouter');
-const commonsRouter = require('./commons/controllers/notificationController')
-
 
 //--------------------------------- Connection Mongo DB ---------------------------------\\
 mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
@@ -48,6 +46,5 @@ app.use(cors(corsOptions));
 app.use('/obtorta/auth', authRoute);
 app.use('/obtorta/coffee', coffeeRoute)
 app.use('/obtorta/herd', herdRouter);
-app.use('/obtorta/commons/', commonsRouter);
 
 module.exports = {app};
