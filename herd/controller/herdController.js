@@ -1,3 +1,4 @@
+const JerseyVote = require("../model/JerseyVote");
 const HerdService = require("../service/herdService");
 
 exports.wakeUp = async(req,res,next) => {
@@ -99,6 +100,29 @@ exports.downloadGPX = async(req, res, next) => {
     } catch(error){
         console.error("Erreur lors de la recuperation du fichier : " + error)
         res.status(500).send({message: "Erreur lors de la recuperation du fichier."});
+    }
+}
+
+exports.sendVote = async (req, res, next) => {
+    try {
+        const vote = await HerdService.sendVote(req.body.email, req.body.votes);
+        if(vote == null){
+            res.status(403).send({message:"Le participant a déjà voté."})
+        }
+        res.status(201).send(vote)
+    } catch(error){
+        console.error("Erreur lors de l'enregistrement du vote' : " + error)
+        res.status(500).send({message: "Erreur lors de l'enregistrement du vote."});
+    }
+}
+
+exports.getAllVotes = async (req, res, next) => {
+    try {
+        const votes = await HerdService.getAllVotes();
+        res.status(200).send(votes);
+    } catch(error){
+        console.error("Erreur lors de la recuperation des votes : " + error)
+        res.status(500).send({message: "Erreur lors de la recuperation des votes."});
     }
 }
 

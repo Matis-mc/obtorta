@@ -14,6 +14,9 @@ router.post('/events', upload.single("file"), herdCtrl.createEvent);
 router.get('/gpx', herdCtrl.downloadGPX);
 router.post('/gpx', upload.single("file"), herdCtrl.uploadGPX);
 
+router.get('/votes', herdCtrl.getAllVotes);
+router.post('/votes', herdCtrl.sendVote);
+
 router.post('/notifications/send', notifCtrl.send);
 router.post('/notifications/subscribe', notifCtrl.subscribe);
 

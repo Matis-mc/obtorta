@@ -2,6 +2,7 @@ const Participant = require("../model/Participant");
 const HerdEvent = require("../model/HerdEvent");
 const GpxFile = require("../model/GpxFile");
 const EventDto = require("../model/EventDto");
+const JerseyVote = require("../model/JerseyVote");
 
 
 exports.saveHerdEvent = async (name, date, localisation, distance, type) => {
@@ -70,4 +71,20 @@ exports.getEventsDtos = async () => {
         eventDtos.push(eventDto);
     }
     return eventDtos;
+}
+
+exports.sendVote = async (email, votes) => {
+    try {
+        return await new JerseyVote({
+        email: email,
+        votes: votes
+        }).save();
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+}
+
+exports.getAllVotes = async () => {
+    return await JerseyVote.find();
 }
