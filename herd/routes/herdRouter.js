@@ -11,6 +11,7 @@ router.get('/participants', herdCtrl.getParticipant);
 router.delete('/participants', herdCtrl.deleteParticipant);
 router.get('/events', herdCtrl.getEvents);
 router.post('/events', upload.single("file"), herdCtrl.createEvent);
+router.delete('/events', herdCtrl.deleteEvent);
 router.get('/gpx', herdCtrl.downloadGPX);
 router.post('/gpx', upload.single("file"), herdCtrl.uploadGPX);
 

@@ -16,6 +16,12 @@ exports.saveHerdEvent = async (name, date, localisation, distance, type) => {
         }).save();
     }
 
+exports.deleteHerdEvent = async(idEvent) => {
+    await Participant.deleteMany({idEvent: idEvent});
+    await GpxFile.deleteOne({idEvent: idEvent});
+    await HerdEvent.deleteOne({_id: idEvent});
+}
+
 exports.saveParticipant = async(idEvent, participant) => {
     
     return await new Participant({
@@ -35,6 +41,7 @@ exports.saveGPX = async(name, buffer, size, idEvent) => {
 }
 
 exports.deleteParticipantFromEvent = async (idParticipant, idEvent) => {
+    console.log("delete participant : " + idParticipant + " from event " + idEvent);
     return await Participant.deleteOne({
                 _id: idParticipant,
                 idEvent: idEvent

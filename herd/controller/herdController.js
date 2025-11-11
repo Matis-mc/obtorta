@@ -44,6 +44,16 @@ exports.getEvents = async(req, res, next) => {
     }
 }
 
+exports.deleteEvent = async (req, res, next) => {
+    try {
+        HerdService.deleteHerdEvent(req.query.idEvent);
+        res.status(204).send();
+    } catch(error){
+        console.error("Erreur lors de la suppression d'un évenement : " + error)
+        res.status(500).send({message: "Erreur lors de la suppression d'un évenement."});
+    }
+}
+
 exports.addParticipant = async(req, res, next) => {
 
     try {
@@ -70,7 +80,7 @@ exports.getParticipant = async(req, res, next) => {
 exports.deleteParticipant = async(req, res, next) => {
 
     try {
-        let participant = HerdService.deleteParticipantFromEvent(req.params.participant, req.params.event);
+        let participant = HerdService.deleteParticipantFromEvent(req.query.participant, req.query.event);
         res.status(200).send(participant);
     } catch(error){
         console.error("Erreur lors de la suppression du participant : " + error)
