@@ -1,11 +1,11 @@
 exports.plants = [
     {
-        id:1,
+        id:10,
         name:"Robusta",
         asset:"robusta"
     },
     {
-        id:2,
+        id:11,
         name:"Arabica",
         asset:"arabica"
     }
