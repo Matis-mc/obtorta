@@ -82,3 +82,13 @@ exports.getExerciseStat = async (req, res, next) => {
     }
 
 }
+
+exports.getExerciseStatsFromTemplate = async (req, res, next) => {
+    try {
+        let exerciseStats = await coalService.getExerciseStatFromTemplateId(req.params.idTemplate);
+        res.status(200).send(exerciseStats);
+    } catch (e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+}

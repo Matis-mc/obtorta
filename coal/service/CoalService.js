@@ -133,6 +133,20 @@ exports.getSeriesFromExecutionIds = async (executionIds) => {
     return await Serie.find({ _id: { $in: executionIds } });
 }
 
+exports.getExerciseStatFromTemplateId = async (templateId) => {
+    template = await Template.findById(templateId);
+    let stats = [];
+    for (let exercise of template.exercises) {
+        let stat = await ExerciseStat.findOne({ idExercise: exercise._id });
+        if (!stat) {
+            stat = await initStat(exercise._id);
+        }
+        stats.push(stat);
+    }
+    return stats;
+
+}
+
 getExercisesForSession = async (session) => {
     let executions = [];
     for (let idExecution of session.idExecutions) {
