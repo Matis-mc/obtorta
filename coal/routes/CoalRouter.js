@@ -6,6 +6,7 @@ const auth = require('../../auth/middlewares/authMwr');
 router.post('/exercise', coalController.createExercise);
 router.post('/template', coalController.createTemplate);
 router.post('/session', coalController.createSession);
+router.post('/exercise/stat', coalController.setExerciseStat);
 router.get('/session', coalController.getSessions);
 router.get('/template', coalController.getTemplates);
 router.get('/exercise', coalController.getAllExercise);

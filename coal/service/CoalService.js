@@ -73,6 +73,18 @@ exports.createSession = async (sessionDto) => {
     }).save();
 }
 
+exports.setExerciseStat = async (exerciseStatDto) => {
+
+    let stat = await ExerciseStat.findOne({ idExercise: exerciseStatDto.exerciseId });
+    if (!stat) {
+        stat = await initStat(exerciseStatDto.exerciseId);
+    }
+    stat.record.set(String(exerciseStatDto.record.reps), exerciseStatDto.record.weight);
+    stat.workload.set(String(exerciseStatDto.travail.reps), exerciseStatDto.travail.weight);
+    return await stat.save();
+}
+
+
 exports.getAllExercise = async () => {
 
     return await Exercise.find();

@@ -28,6 +28,16 @@ exports.createSession = async (req, res, next) => {
     }
 }
 
+exports.setExerciseStat = async (req, res, next) => {
+    try {
+        let exerciseStat = await coalService.setExerciseStat(req.body);
+        res.status(201).send(exerciseStat);
+    } catch (e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+}
+
 exports.getTemplates = async (req, res, next) => {
     try {
         let template = await coalService.getTemplates();
