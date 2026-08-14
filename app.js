@@ -33,7 +33,9 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
     'http://localhost:8000',
-  'file:///home/matis/dev/gpx_exporter.html'
+  'file:///home/matis/dev/gpx_exporter.html',
+  'https://gym-tracker-kappa-lilac.vercel.app'
+
 ];
 
 const corsOptions = {
