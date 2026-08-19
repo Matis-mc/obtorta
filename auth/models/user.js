@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 const unique = require('mongoose-unique-validator')
 
 const User = mongoose.Schema({
@@ -10,4 +11,4 @@ const User = mongoose.Schema({
 
 User.plugin(unique);
 
-module.exports = mongoose.model('User', User); 
+module.exports = getConnection('auth').model('User', User);

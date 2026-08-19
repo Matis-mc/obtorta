@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const {getConnection} = require('../../config/database');
 const mongooseUniqueValidator = require("mongoose-unique-validator");
 
 
@@ -7,4 +8,4 @@ const JerseyVote = mongoose.Schema({
     votes: {type:Array, required:true}
 })
 
-module.exports = mongoose.model('JerseyVote', JerseyVote); 
+module.exports = getConnection('herd').model('JerseyVote', JerseyVote);

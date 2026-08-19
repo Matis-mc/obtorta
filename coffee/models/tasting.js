@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const Tasting = mongoose.Schema({
     idUser: {type:String, required:true},
@@ -12,4 +13,4 @@ const Tasting = mongoose.Schema({
     view: {type:Number, required:true}
 })
 
-module.exports = mongoose.model('Tasting', Tasting);
+module.exports = getConnection('coffee').model('Tasting', Tasting);

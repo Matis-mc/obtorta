@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const Coffee = mongoose.Schema({
     name: {type:String, required:true},
@@ -9,4 +10,4 @@ const Coffee = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Coffee', Coffee); 
+module.exports = getConnection('coffee').model('Coffee', Coffee);

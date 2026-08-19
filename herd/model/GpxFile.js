@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose")
+const {getConnection} = require('../../config/database');
 
 
 const GpxFile = mongoose.Schema({
@@ -8,4 +9,4 @@ const GpxFile = mongoose.Schema({
     idEvent: {type:String, required:true}
 })
 
-module.exports = mongoose.model('GpxFile', GpxFile); 
+module.exports = getConnection('herd').model('GpxFile', GpxFile);

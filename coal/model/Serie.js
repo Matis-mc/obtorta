@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const Serie = mongoose.Schema({
     reps : {type:Number, required:true},
@@ -7,4 +8,4 @@ const Serie = mongoose.Schema({
     restTime : {type:Number, required:false}
 });
 
-module.exports = mongoose.model('Serie', Serie); 
+module.exports = getConnection('coal').model('Serie', Serie);

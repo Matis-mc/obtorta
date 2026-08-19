@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const Exercise = mongoose.Schema({
     name: {type:String, required:true},
@@ -7,4 +8,4 @@ const Exercise = mongoose.Schema({
 
 Exercise.index({ categories: 1 });
 
-module.exports = mongoose.model('Exercise', Exercise); 
+module.exports = getConnection('coal').model('Exercise', Exercise);

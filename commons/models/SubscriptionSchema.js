@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const subscriptionSchema = new mongoose.Schema({
   endpoint: {
@@ -16,4 +17,4 @@ const subscriptionSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Subscription', subscriptionSchema);
+module.exports = getConnection('commons').model('Subscription', subscriptionSchema);

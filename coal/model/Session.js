@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const Session = mongoose.Schema({
     idTemplate : {type:String, required: false},
@@ -8,4 +9,4 @@ const Session = mongoose.Schema({
     idExecutions : {type:Array, required:true},
     categories : { type:Array, requires:true}});
 
-module.exports = mongoose.model('Session', Session); 
+module.exports = getConnection('coal').model('Session', Session);

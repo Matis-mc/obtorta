@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 
 const Template = mongoose.Schema({
     name: { type: String, required: false },
@@ -8,4 +9,4 @@ const Template = mongoose.Schema({
     description: { type: String, required: false }
 });
 
-module.exports = mongoose.model('Template', Template); 
+module.exports = getConnection('coal').model('Template', Template);

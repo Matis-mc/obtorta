@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose")
+const {getConnection} = require('../../config/database');
 
 const HerdEvent = mongoose.Schema({
     name: {type:String, required:true},
@@ -8,4 +9,4 @@ const HerdEvent = mongoose.Schema({
     type: {type:String, required:true}
 })
 
-module.exports = mongoose.model('HerdEvent', HerdEvent); 
+module.exports = getConnection('herd').model('HerdEvent', HerdEvent);

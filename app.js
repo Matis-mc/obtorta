@@ -1,19 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const app = express();
 const authRoute = require('./auth/routes/authRouter');
 const coffeeRoute = require('./coffee/routes/coffeeRouter')
 const herdRouter = require('./herd/routes/herdRouter');
 const coalRouter = require('./coal/routes/CoalRouter');
-//--------------------------------- Connection Mongo DB ---------------------------------\\
-mongoose.connect("mongodb+srv://coffee_app:1234@coffeeapp.pftlkzu.mongodb.net/",
-{
-    dbName: "herd", 
-    useNewUrlParser: true,
-    useUnifiedTopology: true })
-    .then(() => console.log("connection à MongoDB réussie ! "))
-    .catch((e) => console.error("connection à MongoDB échouée ..." + JSON.stringify(e)))
+const {connectDatabases} = require('./config/database');
+
+connectDatabases()
+  .then(() => console.log("connexions MongoDB réussies !"))
+  .catch((error) => console.error(`connexions MongoDB échouées : ${error.message}`));
 
 //--------------------------------- Configuration Express ---------------------------------\\
 app.use(express.json());

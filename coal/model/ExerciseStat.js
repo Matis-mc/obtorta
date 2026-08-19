@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getConnection} = require('../../config/database');
 const unique = require('mongoose-unique-validator')
 
 const ExerciseStat = mongoose.Schema({
@@ -10,4 +11,4 @@ const ExerciseStat = mongoose.Schema({
 
 ExerciseStat.plugin(unique);
 
-module.exports = mongoose.model('ExerciseStat', ExerciseStat); 
+module.exports = getConnection('coal').model('ExerciseStat', ExerciseStat);
